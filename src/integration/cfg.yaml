@@ -1,0 +1,36 @@
+commonVariables:
+  apiTitle: # variable name
+    path: $.info.title
+    isArray: false
+    global: true # common variables globay by default, if it's not global, it's related to its parent
+  servers: # variable name
+    path: $.servers[*].url
+    isArray: false
+renderables:
+  models: # renderable name
+    path: $.components.schemas
+    isArray: false
+    iterate: true # we want to iterate all models and render all of them separately
+    variables:
+      schemaName:
+        path: $.title # $.components.schemas[{{i}}].title
+        isArray: false
+        global: false
+    template: './template/model.mustache'
+    partials:
+      - './template/className.mustache'
+    output: './models/{{name}}.ts'
+  readme:
+    path: $.paths
+    iterate: false
+    variables:
+      schemaName:
+        path: $.info.title
+        isArray: false
+        global: true
+      tags:
+        path: $.tags[*].name
+        isArray: true
+        global: true
+    output: './readme.md'
+    
