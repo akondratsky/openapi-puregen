@@ -53,7 +53,7 @@ export interface RenderData {
   /** path to main mustaches */
   template: string;
   /** paths to mustache partials  */
-  partials?: string[];
+  partials: Record<string, string>;
   /** filename */
   output: string;
 }

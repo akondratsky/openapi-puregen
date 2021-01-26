@@ -48,12 +48,6 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/Node'
-    SearchNodesParams:
-      description: Object describes opportunities in searching nodes
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/UUID'
 
 paths:
   /nodes:
@@ -97,20 +91,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Nodes'
-    put:
-      tags:
-        - Nodes
-      description: Create nodes
-      responses:
-        '200':
-          description: OK
-    patch:
-      tags:
-        - Nodes
-      description: Update nodes
-      responses:
-        '200':
-          description: OK
   /collections:
     summary: CRUD for collections
     description: POST for search.

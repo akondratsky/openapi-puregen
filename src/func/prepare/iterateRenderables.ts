@@ -10,27 +10,17 @@ import { getObjectFromSpec, extractRenderData } from './index';
 export const iterateRenderables = (mappingInputData: MappingInputData): Array<RenderData> => {
   const renderData: Array<RenderData> = [];
 
-  forOwn(mappingInputData.cfg.renderables, ({
-    path,
-    isArray,
-    iterate,
-    ...options
-    // output: outputTemplate,
-    // variables: variablesConfig,
-    // template,
-    // partials
-  },
-  topLevelRenderableName
-  ) => {
+  forOwn(mappingInputData.cfg.renderables, (renderableData, topLevelRenderableName) => {
+    const { path, isArray, iterate } = renderableData;
     const topLevelSource = getObjectFromSpec(mappingInputData.spec, path, isArray);
 
     if (iterate) {
       forOwn(topLevelSource, (source, renderableName) => {
-        renderData.push(extractRenderData(source, renderableName, options, mappingInputData));
+        renderData.push(extractRenderData(source, renderableName, renderableData, mappingInputData));
       });
     } else {
       renderData.push(
-        extractRenderData(topLevelSource, topLevelRenderableName, options, mappingInputData)
+        extractRenderData(topLevelSource, topLevelRenderableName, renderableData, mappingInputData)
       );
     }
   });
