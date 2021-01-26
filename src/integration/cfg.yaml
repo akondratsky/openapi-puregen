@@ -23,6 +23,8 @@ renderables:
   readme:
     path: $.paths
     iterate: false
+    isArray: false
+    template: './template/readme.mustache'
     variables:
       schemaName:
         path: $.info.title

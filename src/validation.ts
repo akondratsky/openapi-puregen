@@ -1,4 +1,4 @@
-import Joi, { ValidationError } from 'joi';
+import Joi, { Schema } from 'joi';
 import { Configuration } from 'app/types';
 import { forOwn } from 'lodash';
 
@@ -21,22 +21,28 @@ const renderableSchema = Joi.object({
   iterate: Joi.boolean().required(),
   variables: Joi.object().optional(),
   template: Joi.string().required(),
-  partials: Joi.array().items(Joi.string().required())
+  partials: Joi.array().items(Joi.string().required()),
+  output: Joi.string().required()
 });
 
 export const validateConfiguration = (cfg: Configuration): void => {
-  check(configurationSchema.validate(cfg).errors);
+  check(configurationSchema, cfg);
   forOwn(cfg.commonVariables, (value) => {
-    check(variableSchema.validate(value).errors);
+    check(variableSchema, value);
   });
   forOwn(cfg.renderables, (renderable) => {
-    check(renderableSchema.validate(renderable).errors);
+    console.log('validating it', renderable);
+    check(renderableSchema, renderable);
+  });
+  forOwn(cfg.renderables.variables, (variable) => {
+    check(variableSchema, variable);
   });
 };
 
-const check = (errors?: ValidationError): void => {
-  if (errors) {
-    console.error(errors);
-    throw new Error('validation error!');
+const check = (schema: Schema, value: unknown): void => {
+  const { errors, error } = schema.validate(value);
+  if (errors || error) {
+    console.error(errors || error);
+    throw new Error('Validation error!');
   }
 };
