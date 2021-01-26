@@ -2,6 +2,7 @@ import { forOwn } from 'lodash';
 import { Variable, MappingInputData } from 'app/types';
 import { getCommonVariables, getObjectFromSpec } from './index';
 
+
 /**
  * @description takes configuration and gathering values - to use them in render
  * @param {unknown} localSource - object from where local variables are gathered
