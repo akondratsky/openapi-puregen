@@ -1,7 +1,8 @@
 import YAML from 'yaml';
 import fs from 'fs';
 import path from 'path';
-import { Configuration, Specification } from './types';
+import { Configuration, Specification } from 'app/types';
+import { validateConfiguration } from 'app/validation';
 
 
 const InitializationError = new Error('Configuration file was not loaded properly');
@@ -25,7 +26,9 @@ export class FileService {
   public useConfig(filePath: string): Configuration {
     const { dir } = path.parse(filePath);
     this.configFolder = dir;
-    return this.parseFile(filePath) as Configuration;
+    const cfg = this.parseFile(filePath) as Configuration;
+    validateConfiguration(cfg);
+    return cfg;
   }
 
   public useSpec(filePath: string): Specification {
