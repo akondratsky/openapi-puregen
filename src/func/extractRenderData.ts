@@ -1,7 +1,7 @@
 import mustache from 'mustache';
 import { RenderData, MappingInputData, Renderable } from 'app/types';
 import { gatherVariableValues } from './index';
-import { fileService } from 'app/main';
+import { loadPartials, loadTemplate } from 'app/FileService';
 
 /**
  * @description extracts all render data from source accordingly to options
@@ -19,9 +19,9 @@ export const extractRenderData = (
   variables.name = name;
 
   return {
-    template: fileService.loadTemplates(template),
+    template: loadTemplate(template),
     variables,
-    partials: fileService.loadPartials(partials),
+    partials: loadPartials(partials),
     output: mustache.render(output, variables)
   } as RenderData;
 };

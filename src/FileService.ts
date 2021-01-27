@@ -3,53 +3,47 @@ import fs from 'fs';
 import path from 'path';
 import { Configuration, Specification } from 'app/types';
 import { validateConfiguration } from 'app/validation';
+import { flow } from 'lodash';
+import { configFolder } from './configFolder';
 
 
-const InitializationError = new Error('Configuration file was not loaded properly');
+/**
+ * All path can be related and absolute. If absolute paths are absolut unambuguous, relative can be relative to config
+ * or to current working directory.
+ * We are loading:
+ * Relative to working directory  |  configuration file
+ * --------------------------------------------------------------
+ * configuration file             |   templates
+ * specification file             |   partials
+ */
 
-export class FileService {
-  private configFolder?: string;
+const readFile = (filename: string): string => fs.readFileSync(filename, 'utf-8');
+const parseFile = flow(readFile, YAML.parse);
 
-  private parseFile(filename: string): unknown {
-    const content = fs.readFileSync(filename, 'utf-8');
-    return YAML.parse(content);
-  }
 
-  public loadTemplate(filePath: string): string {
-    if (!this.configFolder) {
-      throw InitializationError;
-    }
-    const absolutePath = path.isAbsolute(filePath) ? filePath : path.resolve(this.configFolder, filePath);
-    return fs.readFileSync(absolutePath, 'utf-8');
-  }
+export const loadTemplate = (filePath: string): string => {
+  const absolutePath = path.isAbsolute(filePath) ? filePath : path.resolve(configFolder.get(), filePath);
+  return readFile(absolutePath);
+};
 
-  public loadPartials(paths?: string[]): Record<string, string> {
-    if (!paths) {
-      return {} as Record<string, string>;
-    }
-    return paths.reduce((partials, currentPath) => {
-      const { name } = path.parse(currentPath);
-      partials[name] = this.loadTemplate(currentPath);
-      return partials;
-    }, {} as Record<string, string>);
-  }
 
-  public useConfig(filePath: string): Configuration {
-    const { dir } = path.parse(filePath);
-    this.configFolder = dir;
-    const cfg = this.parseFile(filePath) as Configuration;
-    validateConfiguration(cfg);
-    return cfg;
-  }
+export const loadPartials = (paths: string[] = []): Record<string, string> => {
+  return paths.reduce((partials, currentPath) => {
+    const { name } = path.parse(currentPath);
+    partials[name] = loadTemplate(currentPath);
+    return partials;
+  }, {} as Record<string, string>);
+};
 
-  public useSpec(filePath: string): Specification {
-    return this.parseFile(filePath) as Specification;
-  }
 
-  public loadTemplates(paths: string | Array<string>): string | Array<string> {
-    return Array.isArray(paths) ?
-      paths.map(this.loadTemplate)
-      : this.loadTemplate(paths);
-  }
-}
+export const useConfig = (filePath: string): Configuration => {
+  configFolder.set(
+    path.parse(filePath).dir
+  );
+  const cfg = parseFile(filePath) as Configuration;
+  validateConfiguration(cfg);
+  return cfg;
+};
+
+export const useSpec = (filePath: string): Specification => parseFile(filePath) as Specification;
 
