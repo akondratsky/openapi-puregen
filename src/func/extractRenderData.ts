@@ -1,7 +1,7 @@
 import mustache from 'mustache';
 import { RenderData, MappingInputData, Renderable } from 'app/types';
 import { gatherVariableValues } from './index';
-import { loadPartials, loadTemplate } from 'app/FileService';
+import { loadPartials, loadTemplate } from 'app/files';
 
 /**
  * @description extracts all render data from source accordingly to options

@@ -31,7 +31,6 @@ export const validateConfiguration = (cfg: Configuration): void => {
     check(variableSchema, value);
   });
   forOwn(cfg.renderables, (renderable) => {
-    console.log('validating it', renderable);
     check(renderableSchema, renderable);
   });
   forOwn(cfg.renderables.variables, (variable) => {
