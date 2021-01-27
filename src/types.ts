@@ -63,3 +63,8 @@ export interface MappingInputData {
   spec: Specification;
   cfg: Configuration;
 }
+
+export interface OutputData {
+  output: string;
+  content: string;
+}

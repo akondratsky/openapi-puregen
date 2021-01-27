@@ -3,3 +3,4 @@ export * from './gatherVariableValues';
 export * from './getCommonVariables';
 export * from './getObjectFromSpec';
 export * from './iterateRenderables';
+export * from './render';

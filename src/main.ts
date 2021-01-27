@@ -1,16 +1,20 @@
-import { iterateRenderables } from './func/prepare';
+import { iterateRenderables, render } from './func';
 import { FileService } from './FileService';
+import { writeFiles } from './func/writeFiles';
+import { flow } from 'lodash';
 
 export const fileService = new FileService();
 
+const process = flow(
+  iterateRenderables,
+  render,
+  writeFiles
+);
+
 try {
-  const result = iterateRenderables({
+  process({
     spec: fileService.useSpec('./src/integration/spec.yaml'),
     cfg: fileService.useConfig('./src/integration/cfg.yaml')
-  });
-
-  console.dir(result, {
-    depth: 100
   });
 } catch (e) {
   console.error(e);

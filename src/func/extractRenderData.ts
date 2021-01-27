@@ -21,7 +21,7 @@ export const extractRenderData = (
   return {
     template: fileService.loadTemplates(template),
     variables,
-    partials: {}, // partials ? fileService.loadTemplates(partials) : undefined,
+    partials: fileService.loadPartials(partials),
     output: mustache.render(output, variables)
   } as RenderData;
 };

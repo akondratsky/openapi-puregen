@@ -39,6 +39,7 @@ export const validateConfiguration = (cfg: Configuration): void => {
   });
 };
 
+
 const check = (schema: Schema, value: unknown): void => {
   const { errors, error } = schema.validate(value);
   if (errors || error) {

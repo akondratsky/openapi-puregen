@@ -15,12 +15,23 @@ export class FileService {
     return YAML.parse(content);
   }
 
-  private loadTemplate(filePath: string): string {
+  public loadTemplate(filePath: string): string {
     if (!this.configFolder) {
       throw InitializationError;
     }
     const absolutePath = path.isAbsolute(filePath) ? filePath : path.resolve(this.configFolder, filePath);
     return fs.readFileSync(absolutePath, 'utf-8');
+  }
+
+  public loadPartials(paths?: string[]): Record<string, string> {
+    if (!paths) {
+      return {} as Record<string, string>;
+    }
+    return paths.reduce((partials, currentPath) => {
+      const { name } = path.parse(currentPath);
+      partials[name] = this.loadTemplate(currentPath);
+      return partials;
+    }, {} as Record<string, string>);
   }
 
   public useConfig(filePath: string): Configuration {
