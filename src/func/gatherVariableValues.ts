@@ -15,9 +15,9 @@ export const gatherVariableValues = (
   mappingInputData: MappingInputData
 ): Record<string, unknown> => {
   const gatheredValues: Record<string, unknown> = getCommonVariables(mappingInputData);
-  forOwn(variables, ({ global, isArray, path }, name) => {
+  forOwn(variables, ({ global, path }, name) => {
     const source = global ? mappingInputData.spec : localSource;
-    gatheredValues[name] = getObjectFromSpec(source, path, isArray);
+    gatheredValues[name] = getObjectFromSpec(source, path);
   });
   return gatheredValues;
 };

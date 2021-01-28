@@ -11,8 +11,8 @@ export const iterateRenderables = (mappingInputData: MappingInputData): Array<Re
   const renderData: Array<RenderData> = [];
 
   forOwn(mappingInputData.cfg.renderables, (renderableData, topLevelRenderableName) => {
-    const { path, isArray, iterate } = renderableData;
-    const topLevelSource = getObjectFromSpec(mappingInputData.spec, path, isArray);
+    const { path, iterate } = renderableData;
+    const topLevelSource = getObjectFromSpec(mappingInputData.spec, path);
 
     if (iterate) {
       forOwn(topLevelSource, (source, renderableName) => {

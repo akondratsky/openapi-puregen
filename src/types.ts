@@ -10,8 +10,6 @@ export type Specification = Record<string, unknown>;
 export interface Variable {
   /** Json Path to value in specification */
   path: JsonPath;
-  /** Is this field in specification is array */
-  isArray: boolean;
   /** if false, path applies relatively current iterable */
   global: boolean;
 }
@@ -22,8 +20,6 @@ export interface Variable {
 export interface Renderable {
   /** Json Path, base of renderable */
   path: JsonPath;
-  /** is object, specified by path, array */
-  isArray: boolean;
   /** are we need to iterate this renderables or it is just simple render */
   iterate: boolean;
   /** this list will be used together with commonVariables in template */

@@ -11,13 +11,11 @@ const configurationSchema = Joi.object({
 
 const variableSchema = Joi.object({
   path: Joi.string().required(),
-  isArray: Joi.boolean().required(),
   global: Joi.boolean().optional()
 });
 
 const renderableSchema = Joi.object({
   path: Joi.string().required(),
-  isArray: Joi.boolean().required(),
   iterate: Joi.boolean().required(),
   variables: Joi.object().optional(),
   template: Joi.string().required(),
@@ -37,7 +35,6 @@ export const validateConfiguration = (cfg: Configuration): void => {
     check(variableSchema, variable);
   });
 };
-
 
 const check = (schema: Schema, value: unknown): void => {
   const { errors, error } = schema.validate(value);
