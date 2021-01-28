@@ -36,9 +36,11 @@ export interface Renderable {
 export interface Configuration {
   /**
    * list of variables which will be applied for all of the renderables;
-   * if renderable has variable with same name, it will be overrided
+   * if renderable has variable with same name, it will be overrided;
+   * NB: all common variables are "global".
    */
-  commonVariables: Record<string, Variable>;
+  commonVariables?: Record<string, JsonPath>;
+  /** renderables itself */
   renderables: Record<string, Renderable>;
 }
 

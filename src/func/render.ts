@@ -7,8 +7,6 @@ import { OutputData, RenderData } from 'app/types';
  * @returns {Array<OutputData>}
  */
 export const render = (data: RenderData[]): OutputData[] => {
-  console.dir(data, { depth: 100 });
-
   return data.map(({ output, template, variables, partials }) => {
     return {
       output,

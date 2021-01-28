@@ -1,7 +1,8 @@
 import { forOwn } from 'lodash';
 import { RenderData, MappingInputData } from 'app/types';
 
-import { getObjectFromSpec, extractRenderData } from './index';
+import { getObjectFromSpec } from './getObjectFromSpec';
+import { extractRenderData } from './extractRenderData';
 
 /**
  * @description iterates over renderables list and prepares a bunch of objects to output

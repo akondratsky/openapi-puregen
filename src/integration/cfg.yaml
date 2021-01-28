@@ -1,9 +1,6 @@
 commonVariables:
-  apiTitle: # variable name
-    path: $.info.title
-    global: true # common variables globay by default, if it's not global, it's related to its parent
-  servers: # variable name
-    path: $.servers[*].url
+  apiTitle: $.info.title
+  servers: $.servers[*].url
 renderables:
   models: # renderable name
     path: $.components.schemas

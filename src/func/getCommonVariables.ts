@@ -9,8 +9,10 @@ import { getObjectFromSpec } from './index';
  */
 export const getCommonVariables = ({ spec, cfg }: MappingInputData): Record<string, unknown> => {
   const variables: Record<string, unknown> = {};
-  forOwn(cfg.commonVariables, ({ path }, key) => {
+
+  forOwn(cfg.commonVariables, (path, key) => {
     variables[key] = getObjectFromSpec(spec, path);
   });
+
   return variables;
 };
