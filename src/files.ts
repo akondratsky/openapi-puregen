@@ -4,7 +4,7 @@ import path from 'path';
 import { Configuration, Specification } from 'app/types';
 import { validateConfiguration } from 'app/validation';
 import { flow } from 'lodash';
-import { configFolder } from './configFolder';
+import * as configFolder from './configFolder';
 
 /**
  * All path can be related and absolute. If absolute paths are absolut unambuguous, relative can be relative to config
@@ -20,7 +20,9 @@ const readFile = (filename: string): string => fs.readFileSync(filename, 'utf-8'
 
 const parseFile = flow(readFile, YAML.parse);
 
+
 export const loadTemplate = flow(configFolder.getFileName, readFile);
+
 
 export const loadPartials = (paths: string[] = []): Record<string, string> => {
   return paths.reduce((partials, currentPath) => {
@@ -30,6 +32,7 @@ export const loadPartials = (paths: string[] = []): Record<string, string> => {
   }, {} as Record<string, string>);
 };
 
+
 export const loadConfiguration = (filePath: string): Configuration => {
   configFolder.set(
     path.parse(filePath).dir
@@ -38,5 +41,6 @@ export const loadConfiguration = (filePath: string): Configuration => {
   validateConfiguration(cfg);
   return cfg;
 };
+
 
 export const loadSpecification = (filePath: string): Specification => parseFile(filePath) as Specification;

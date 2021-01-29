@@ -4,21 +4,21 @@ let _configFolder: string | undefined;
 
 const configurationError = new Error('Configuration file was not loaded properly');
 
-export const configFolder = {
-  get(): string {
-    if (!_configFolder) {
-      throw configurationError;
-    }
-    return _configFolder;
-  },
 
-  set(value: string): void {
-    _configFolder = value;
-  },
-  getFileName(filePath: string): string {
-    if (!_configFolder) {
-      throw configurationError;
-    }
-    return path.resolve(_configFolder, filePath);
+export const get = (): string => {
+  if (!_configFolder) {
+    throw configurationError;
   }
+  return _configFolder;
+};
+
+export const set = (value: string): void => {
+  _configFolder = value;
+};
+
+export const getFileName = (filePath: string): string => {
+  if (!_configFolder) {
+    throw configurationError;
+  }
+  return path.resolve(_configFolder, filePath);
 };
