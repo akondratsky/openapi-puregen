@@ -1,6 +1,6 @@
 {
-  "name": "openapi-pure-generator",
-  "version": "0.2.1-alpha",
+  "name": "pure-codegen",
+  "version": "1.0.0",
   "description": "Code generation from OpenAPI specifications",
   "main": "run.js",
   "scripts": {
