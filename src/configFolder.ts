@@ -13,7 +13,7 @@ export const get = (): string => {
 };
 
 export const set = (value: string): void => {
-  _configFolder = value;
+  _configFolder = path.resolve(value);
 };
 
 export const getFileName = (filePath: string): string => {
