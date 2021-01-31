@@ -1,8 +1,10 @@
 import { writeFiles } from '../writeFiles';
-import fs from 'fs/promises';
+import { promises as fs } from 'fs';
 
-jest.mock('fs/promises', () => ({
-  writeFile: jest.fn()
+jest.mock('fs', () => ({
+  promises: {
+    writeFile: jest.fn()
+  }
 }));
 
 
