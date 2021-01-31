@@ -10,7 +10,8 @@
     "test": "jest",
     "test-watch": "jest --watchAll",
     "test-coverage": "jest --collectCoverage=true",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "integration": "ts-node -r tsconfig-paths/register ./src/main.ts --spec ./integration/spec.yaml --config ./integration/cfg.yaml"
   },
   "bin": "run.js",
   "files": [

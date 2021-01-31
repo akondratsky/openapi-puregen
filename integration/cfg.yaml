@@ -1,0 +1,12 @@
+renderables:
+  models: # renderable name
+    path: $.components.schemas
+    iterate: true # we want to iterate all models and render all of them separately
+    variables:
+      type: # string, object etc
+        path: $.type
+        global: false
+    template: './template/model.mustache'
+    partials:
+      - './template/className.mustache'
+    output: './models/{{name}}.ts' # name of current variable aka key in the object
