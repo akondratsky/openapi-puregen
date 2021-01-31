@@ -2,7 +2,7 @@ module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
   globalSetup: '<rootDir>/jest.setup.js',
-  testPathIgnorePatterns: ['dst/'],
+  testPathIgnorePatterns: ['lib/'],
   moduleNameMapper: {
     '^app/(.*)': '<rootDir>/src/$1'
   },
